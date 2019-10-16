@@ -58,7 +58,7 @@ public class RestTest{
 
     @Test//GET метод SINGLE USER
     public void getSingleUser() throws IOException {
-        String endpoint="/api/users";
+        String endpoint="/api/users/2";
 
         //Выполняем REST GET запрос с нашими параметрами
         // и сохраняем результат в переменную response.
