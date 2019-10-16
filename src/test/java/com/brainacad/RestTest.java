@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class RestTest{
 
-    private static final String URL="https://reqres.in/";
-    String endpoint="/api/users";
+    private static final String URL="https://reqres.in";
 
     @Test//GET метод
     public void checkGetResponseStatusCode() throws IOException {
+        String endpoint="/api/users";
 
         //Выполняем REST GET запрос с нашими параметрами
         // и сохраняем результат в переменную response.
@@ -28,6 +28,21 @@ public class RestTest{
 
     @Test//GET метод
     public void checkGetResponseBodyNotNull() throws IOException {
+        String endpoint="/api/users";
+
+        //Выполняем REST GET запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.get(URL+endpoint,"?page=2");
+
+        //Конвертируем входящий поток тела ответа в строку
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        System.out.println(body);
+        Assert.assertNotEquals("Body shouldn't be null", null, body);
+    }
+
+    @Test//GET метод LIST USERS
+    public void getListUsers() throws IOException {
+        String endpoint="/api/users";
 
         //Выполняем REST GET запрос с нашими параметрами
         // и сохраняем результат в переменную response.
@@ -36,11 +51,34 @@ public class RestTest{
         //Конвертируем входящий поток тела ответа в строку
         String body=HttpClientHelper.getBodyFromResponse(response);
         System.out.println(body);
+        int n = JsonUtils.intFromJSONByPath(body, "$.total");
+        Assert.assertEquals("Total number of users = 12", 12, n);
         Assert.assertNotEquals("Body shouldn't be null", null, body);
+    }
+
+    @Test//GET метод SINGLE USER
+    public void getSingleUser() throws IOException {
+        String endpoint="/api/users";
+
+        //Выполняем REST GET запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.get(URL+endpoint,"");
+        System.out.println("response is: "+response);
+
+        //Конвертируем входящий поток тела ответа в строку
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        System.out.println(body);
+        String fName = JsonUtils.stringFromJSONByPath(body, "$..first_name");
+        String lName = JsonUtils.stringFromJSONByPath(body, "$..last_name");
+            Assert.assertNotEquals("Body shouldn't be null", null, body);
+            Assert.assertEquals("First name of user - 'Janet'", "Janet", fName);
+            Assert.assertEquals("Last name of user - 'Weaver'", "Weaver", lName);
     }
 
     @Test//POST метод
     public void checkPostResponseStatusCode() throws IOException {
+        String endpoint="/api/users";
+
         //создаём тело запроса
         String requestBody="{\"name\": \"morpheus\",\"job\": \"leader\"}";
 
@@ -56,6 +94,8 @@ public class RestTest{
 
     @Test//POST метод
     public void checkPostResponseBodyNotNull() throws IOException {
+        String endpoint="/api/users";
+
         //создаём тело запроса
         String requestBody="{\"name\": \"morpheus\",\"job\": \"leader\"}";
 
@@ -71,6 +111,8 @@ public class RestTest{
 
     @Test//POST метод create user
     public void checkPostCreateUser() throws IOException {
+        String endpoint="/api/users";
+
         //создаём тело запроса
         String requestBody="{\"name\": \"den\",\"job\": \"tester\"}";
 
