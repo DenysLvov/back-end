@@ -38,8 +38,7 @@ public class JsonUtils {
     public static String stringFromJSONByPath(String jsonString, String jsonPath) {
         String s =  null;
         try {
-            List<String> strLst = JsonPath.parse(jsonString).read(jsonPath);
-            s = strLst.get(0);
+            s = JsonPath.parse(jsonString).read(jsonPath);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

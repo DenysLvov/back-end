@@ -68,14 +68,26 @@ public class RestTest{
         //Конвертируем входящий поток тела ответа в строку
         String body=HttpClientHelper.getBodyFromResponse(response);
         System.out.println(body);
-        String fName = JsonUtils.stringFromJSONByPath(body, "$..first_name");
-        String lName = JsonUtils.stringFromJSONByPath(body, "$..last_name");
+        String fName = JsonUtils.stringFromJSONByPath(body, "$.data.first_name");
+        String lName = JsonUtils.stringFromJSONByPath(body, "$.data.last_name");
             Assert.assertNotEquals("Body shouldn't be null", null, body);
             Assert.assertEquals("First name of user - 'Janet'", "Janet", fName);
             Assert.assertEquals("Last name of user - 'Weaver'", "Weaver", lName);
     }
 
-    @Test//POST метод
+    @Test//DELETE метод
+    //TODO: clarify what to put in headers
+    public void deleteMethod() throws IOException {
+        String endpoint = "/api/users/2";
+
+        HttpResponse response = HttpClientHelper.delete(URL+endpoint,"");
+        System.out.println("response is: " + response);
+        int statusCode = response.getStatusLine().getStatusCode();
+        System.out.println("Response Code : " + statusCode);
+        Assert.assertEquals("Response status code should be 204", 204, statusCode);
+    }
+
+    @Test//POST метод CREATE
     public void checkPostResponseStatusCode() throws IOException {
         String endpoint="/api/users";
 
@@ -89,7 +101,8 @@ public class RestTest{
         //получаем статус код из ответа
         int statusCode = response.getStatusLine().getStatusCode();
         System.out.println("Response Code : " + statusCode);
-        Assert.assertEquals("Response status code should be 201", 201, statusCode);
+        String body=HttpClientHelper.getBodyFromResponse(response);
+            Assert.assertEquals("Response status code should be 201", 201, statusCode);
     }
 
     @Test//POST метод
@@ -124,7 +137,26 @@ public class RestTest{
         String body=HttpClientHelper.getBodyFromResponse(response);
         int statusCode = response.getStatusLine().getStatusCode();
         System.out.println(body);
-        Assert.assertEquals("Response status code should be 201", 201, statusCode);
+        String name = JsonUtils.stringFromJSONByPath(body, "$.name");
+            Assert.assertEquals("Response status code should be 201", 201, statusCode);
+            Assert.assertEquals("Name of user - 'den'", "den", name);
+    }
+
+    @Test//PUT метод UPDATE
+    public void checkPutUpdateUser() throws IOException {
+        String endpoint = "/api/users";
+
+        //создаём тело запроса
+        String requestBody="{\"name\": \"updated_user\",\"job\": \"updated_job\"}";
+
+        //Выполняем REST POST запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.put(URL+endpoint, requestBody);
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String name = JsonUtils.stringFromJSONByPath(body, "$.name");
+            Assert.assertEquals("Response status code should be 200", 200, statusCode);
+            Assert.assertEquals("Name of new user - 'updated_user'", "updated_user", name);
     }
 
     //TODO: напишите по тесткейсу на каждый вариант запроса на сайте https://reqres.in

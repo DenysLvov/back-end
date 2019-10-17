@@ -2,8 +2,10 @@ package com.brainacad;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -74,28 +76,6 @@ public class HttpClientHelper {
         return response;
     }
 
-    public static HttpResponse delete(String endpointUrl, String body, Map<String, String> headers) throws IOException {
-        //Создаём экземпляр HTTP клиента
-        HttpClient client = HttpClientBuilder.create().build();
-        //Создаём HTTP DELETE запрос из URL и параметров
-        HttpPost post = new HttpPost(endpointUrl);
-
-        //добавляем в запрос необходимые хедеры
-        for (String headerKey : headers.keySet()) {
-            post.addHeader(headerKey, headers.get(headerKey));
-        }
-
-        //добавляем к запросу тело запроса
-        post.setEntity(new StringEntity(body));
-
-        //выполняем запрос в HTTP клиенте и получаем ответ
-        HttpResponse response = client.execute(post);
-
-        //возвращаем response
-        return response;
-    }
-
-
     public static String getBodyFromResponse(HttpResponse response) throws IOException {
         //создаём ридер буффера и передаём в него входящий поток респонса
         BufferedReader rd = new BufferedReader(
@@ -109,6 +89,52 @@ public class HttpClientHelper {
             result.append(line);
         }
         return result.toString();
+    }
+
+    //PUT method
+    public static HttpResponse put(String endpointUrl, String body, Map<String, String> headers) throws IOException {
+        //Создаём экземпляр HTTP клиента
+        HttpClient client = HttpClientBuilder.create().build();
+        //Создаём HTTP POST запрос из URL и параметров
+        HttpPut put = new HttpPut(endpointUrl);
+
+        //добавляем в запрос необходимые хедеры
+        for (String headerKey : headers.keySet()) {
+            put.addHeader(headerKey, headers.get(headerKey));
+        }
+
+        //добавляем к запросу тело запроса
+        put.setEntity(new StringEntity(body));
+
+        //выполняем запрос в HTTP клиенте и получаем ответ
+        HttpResponse response = client.execute(put);
+
+        //возвращаем response
+        return response;
+    }
+
+    public static HttpResponse put(String endpointUrl, String parameters) throws IOException {
+        Map<String, String> headers = new HashMap<>();
+        //Добавляем в headers наш заголовок
+        headers.put("Content-Type", "application/json");
+
+        return put(endpointUrl, parameters, headers);
+    }
+
+    //DELETE method
+    public static HttpResponse delete(String endpointUrl, String body) throws IOException {
+        //Создаём экземпляр HTTP клиента
+        HttpClient client = HttpClientBuilder.create().build();
+        //Создаём HTTP DELETE запрос из URL и параметров
+        HttpDelete delete = new HttpDelete(endpointUrl);
+
+        //добавляем к запросу тело запроса
+
+        //выполняем запрос в HTTP клиенте и получаем ответ
+        HttpResponse response = client.execute(delete);
+
+        //возвращаем response
+        return response;
     }
 
     //TODO: допишите методы для запросов PUT, PATCH и DELETE
