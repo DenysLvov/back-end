@@ -2,10 +2,7 @@ package com.brainacad;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
@@ -137,5 +134,35 @@ public class HttpClientHelper {
         return response;
     }
 
-    //TODO: допишите методы для запросов PUT, PATCH и DELETE
+    //PATCH method
+    public static HttpResponse patch(String endpointUrl, String body, Map<String, String> headers) throws IOException {
+        //Создаём экземпляр HTTP клиента
+        HttpClient client = HttpClientBuilder.create().build();
+        //Создаём HTTP PATCH запрос из URL и параметров
+        HttpPatch patch = new HttpPatch(endpointUrl);
+
+        //добавляем в запрос необходимые хедеры
+        for (String headerKey : headers.keySet()) {
+            patch.addHeader(headerKey, headers.get(headerKey));
+        }
+
+        //добавляем к запросу тело запроса
+        patch.setEntity(new StringEntity(body));
+
+        //выполняем запрос в HTTP клиенте и получаем ответ
+        HttpResponse response = client.execute(patch);
+
+        //возвращаем response
+        return response;
+    }
+
+    public static HttpResponse patch(String endpointUrl, String parameters) throws IOException {
+        Map<String, String> headers = new HashMap<>();
+        //Добавляем в headers наш заголовок
+        headers.put("Content-Type", "application/json");
+
+        return patch(endpointUrl, parameters, headers);
+    }
+
+
 }

@@ -12,7 +12,7 @@ public class RestTest{
 
     private static final String URL="https://reqres.in";
 
-    @Test//GET метод
+    @Test//GET метод status mode
     public void checkGetResponseStatusCode() throws IOException {
         String endpoint="/api/users";
 
@@ -26,7 +26,7 @@ public class RestTest{
         Assert.assertEquals("Response status code should be 200", 200, statusCode);
     }
 
-    @Test//GET метод
+    @Test//GET метод body
     public void checkGetResponseBodyNotNull() throws IOException {
         String endpoint="/api/users";
 
@@ -75,6 +75,22 @@ public class RestTest{
             Assert.assertEquals("Last name of user - 'Weaver'", "Weaver", lName);
     }
 
+    @Test//GET DELAYED RESPONSE
+    public void getDelayedresponse() throws IOException {
+        String endpoint="/api/users?delay=10";
+
+        //Выполняем REST GET запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.get(URL+endpoint,"page=2");
+
+        //Конвертируем входящий поток тела ответа в строку
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        System.out.println(body);
+        int code = response.getStatusLine().getStatusCode();
+            Assert.assertEquals("Status code = 200", 200, code);
+            Assert.assertNotEquals("Body shouldn't be null", null, body);
+    }
+
     @Test//DELETE метод
     //TODO: clarify what to put in headers
     public void deleteMethod() throws IOException {
@@ -105,7 +121,7 @@ public class RestTest{
             Assert.assertEquals("Response status code should be 201", 201, statusCode);
     }
 
-    @Test//POST метод
+    @Test//POST метод body not null
     public void checkPostResponseBodyNotNull() throws IOException {
         String endpoint="/api/users";
 
@@ -142,6 +158,25 @@ public class RestTest{
             Assert.assertEquals("Name of user - 'den'", "den", name);
     }
 
+    @Test//POST метод REGISTER - SUCCESSFUL
+    public void checkPostRegisterSuccess() throws IOException {
+        String endpoint="/api/register";
+
+        //создаём тело запроса
+        String requestBody="{\"email\": \"eve.holt@reqres.in\",\"password\": \"pistol\"}";
+
+        //Выполняем REST POST запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.post(URL+endpoint,requestBody);
+
+        //Конвертируем входящий поток тела ответа в строку
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        System.out.println(body);
+        int code = response.getStatusLine().getStatusCode();
+            Assert.assertEquals("Status code = 200", 200, code);
+            Assert.assertNotEquals("Body shouldn't be null", null, body);
+    }
+
     @Test//PUT метод UPDATE
     public void checkPutUpdateUser() throws IOException {
         String endpoint = "/api/users";
@@ -159,7 +194,39 @@ public class RestTest{
             Assert.assertEquals("Name of new user - 'updated_user'", "updated_user", name);
     }
 
-    //TODO: напишите по тесткейсу на каждый вариант запроса на сайте https://reqres.in
-    //TODO: в тескейсах проверьте Result Code и несколько параметров из JSON ответа (если он есть)
+    @Test//PATCH метод UPDATE
+    public void checkPatchUpdateUser() throws IOException {
+        String endpoint = "/api/users/2";
+
+        //создаём тело запроса
+        String requestBody="{\"name\": \"morpheus\",\"job\": \"updated_job\"}";
+
+        //Выполняем REST POST запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.patch(URL+endpoint, requestBody);
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String job = JsonUtils.stringFromJSONByPath(body, "$.job");
+            Assert.assertEquals("Response status code should be 200", 200, statusCode);
+            Assert.assertEquals("Name of new user - 'morpheus'", "updated_job", job);
+    }
+
+    @Test//PATCH метод UPDATE
+    public void checkPatchUpdateUserId_7() throws IOException {
+        String endpoint = "/api/users/7";
+
+        //создаём тело запроса
+        String requestBody="{\"id\": \"7\",\"email\": \"updated_email@email.com\"}";
+
+        //Выполняем REST POST запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.patch(URL+endpoint, requestBody);
+        String body=HttpClientHelper.getBodyFromResponse(response);
+        int statusCode = response.getStatusLine().getStatusCode();
+        String email = JsonUtils.stringFromJSONByPath(body, "$.email");
+            Assert.assertEquals("Response status code should be 200", 200, statusCode);
+            Assert.assertEquals("Name of new user - 'morpheus'", "updated_email@email.com", email);
+    }
+
 
 }

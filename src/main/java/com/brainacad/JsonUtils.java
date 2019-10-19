@@ -23,6 +23,7 @@ public class JsonUtils {
     /*
      * */
 
+    //Extract integer from JSON
     public static int intFromJSONByPath(String jsonString, String jsonPath) {
         Integer num = null;
         try {
@@ -33,8 +34,7 @@ public class JsonUtils {
         return num;
     }
 
-    //TODO: Используя библиотеку com.jayway.jsonpath (Maven) напишите метод извлечения строки из JSON по JSON Path:
-
+    //Extract String from JSON
     public static String stringFromJSONByPath(String jsonString, String jsonPath) {
         String s =  null;
         try {
@@ -45,23 +45,26 @@ public class JsonUtils {
         return s;
     }
 
-
-    //TODO: Используя библиотеку com.jayway.jsonpath (Maven) напишите метод извлечения double из JSON по JSON Path:
-    /*
-    public static double doubleFromJSONByPath(String json, String jsonPath){
+    //Extract double from JSON
+    public static double doubleFromJSONByPath(String jsonString, String jsonPath){
+        Double num = null;
+        try {
+            num = JsonPath.parse(jsonString).read(jsonPath);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return num;
     }
-    */
 
-    //TODO: Используя библиотеку com.jayway.jsonpath (Maven) напишите метод извлечения списка (List) из JSON по JSON Path:
-    /*
-    public static List listFromJSONByPath(String json, String jsonPath){
+    //Extract List<> from JSON
+    public static List listFromJSONByPath(String jsonString, String jsonPath){
+        List<Object> lObj = null;
+        try {
+            lObj = JsonPath.parse(jsonString).read(jsonPath);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return lObj;
     }
-    */
 
 }
-
-
-/* DocumentContext jsonContext = JsonPath.parse(jsonString);
-        String jsonpathCreatorName = jsonContext.read(jsonpathCreatorNamePath);
-        List<String> jsonpathCreatorLocation = jsonContext.read(jsonpathCreatorLocationPath);
-             System.out.println(jsonpathCreatorLocation.get(1)); */
