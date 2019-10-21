@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -91,10 +92,54 @@ public class RestTest{
             Assert.assertNotEquals("Body shouldn't be null", null, body);
     }
 
+    @Test//GET LIST
+    public void getListByIdresponse() throws IOException {
+        String endpoint="/api/unknown";
+
+        //Выполняем REST GET запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.get(URL+endpoint,"");
+
+        //Конвертируем входящий поток тела ответа в строку
+        String body=HttpClientHelper.getBodyFromResponse(response);
+
+        List idList = JsonUtils.listFromJSONByPath (body, "$..id");
+        List namesList = JsonUtils.listFromJSONByPath (body, "$..name");
+        System.out.println(body);
+
+        System.out.println("Size of name: " +idList.size());
+        System.out.println(idList.get(0));
+        int code = response.getStatusLine().getStatusCode();
+            Assert.assertEquals("Status code = 200", 200, code);
+            Assert.assertEquals("First element = 1", 1, idList.get(0));
+            Assert.assertEquals("Second name = 'fuchsia rose'", "fuchsia rose", namesList.get(1));
+    }
+
+    @Test//GET LIST2
+    public void getListSearchIdByYear() throws IOException {
+        String endpoint="/api/unknown";
+
+        //Выполняем REST GET запрос с нашими параметрами
+        // и сохраняем результат в переменную response.
+        HttpResponse response = HttpClientHelper.get(URL+endpoint,"");
+
+        //Конвертируем входящий поток тела ответа в строку
+        String body=HttpClientHelper.getBodyFromResponse(response);
+
+        //The result is a list, because filters (@) always return lists
+        List id = JsonUtils.listFromJSONByPath(body, "$.data[?(@.year==2002)].id");
+
+        System.out.println(body);
+
+        int code = response.getStatusLine().getStatusCode();
+        Assert.assertEquals("Status code = 200", 200, code);
+        Assert.assertEquals("Id of item with year 2002 = 3", 3, id.get(0));
+     }
+
     @Test//DELETE метод
     //TODO: clarify what to put in headers
     public void deleteMethod() throws IOException {
-        String endpoint = "/api/users/2";
+        String endpoint = "/api/users/777";
 
         HttpResponse response = HttpClientHelper.delete(URL+endpoint,"");
         System.out.println("response is: " + response);

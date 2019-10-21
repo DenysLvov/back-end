@@ -16,11 +16,15 @@ import static org.apache.http.protocol.HTTP.USER_AGENT;
 
 public class HttpClientHelper {
 
+    private static Map<String, String> headers = new HashMap<>();
+    static{
+        headers.put("Content-Type", "application/json");
+    }
+
     public static HttpResponse get(String endpointUrl, String parameters) throws IOException {
         //Создаём переменую headers типа Map
         Map<String, String> headers = new HashMap<>();
         //Добавляем в headers наш заголовок
-        headers.put("Content-Type", "application/json");
 
         return get(endpointUrl, parameters, headers);
     }
@@ -44,15 +48,8 @@ public class HttpClientHelper {
         return response;
     }
 
-    public static HttpResponse post(String endpointUrl, String parameters) throws IOException {
-        Map<String, String> headers = new HashMap<>();
-        //Добавляем в headers наш заголовок
-        headers.put("Content-Type", "application/json");
 
-        return post(endpointUrl, parameters, headers);
-    }
-
-    public static HttpResponse post(String endpointUrl, String body, Map<String, String> headers) throws IOException {
+    public static HttpResponse post(String endpointUrl, String body) throws IOException {
         //Создаём экземпляр HTTP клиента
         HttpClient client = HttpClientBuilder.create().build();
         //Создаём HTTP POST запрос из URL и параметров
@@ -110,11 +107,7 @@ public class HttpClientHelper {
         return response;
     }
 
-    public static HttpResponse put(String endpointUrl, String parameters) throws IOException {
-        Map<String, String> headers = new HashMap<>();
-        //Добавляем в headers наш заголовок
-        headers.put("Content-Type", "application/json");
-
+   public static HttpResponse put(String endpointUrl, String parameters) throws IOException {
         return put(endpointUrl, parameters, headers);
     }
 
@@ -157,10 +150,6 @@ public class HttpClientHelper {
     }
 
     public static HttpResponse patch(String endpointUrl, String parameters) throws IOException {
-        Map<String, String> headers = new HashMap<>();
-        //Добавляем в headers наш заголовок
-        headers.put("Content-Type", "application/json");
-
         return patch(endpointUrl, parameters, headers);
     }
 

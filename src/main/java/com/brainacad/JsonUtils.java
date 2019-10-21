@@ -25,46 +25,22 @@ public class JsonUtils {
 
     //Extract integer from JSON
     public static int intFromJSONByPath(String jsonString, String jsonPath) {
-        Integer num = null;
-        try {
-            num = JsonPath.parse(jsonString).read(jsonPath);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return num;
+      return JsonPath.parse(jsonString).read(jsonPath);
     }
 
     //Extract String from JSON
     public static String stringFromJSONByPath(String jsonString, String jsonPath) {
-        String s =  null;
-        try {
-            s = JsonPath.parse(jsonString).read(jsonPath);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return s;
-    }
+       return JsonPath.parse(jsonString).read(jsonPath);
+     }
 
     //Extract double from JSON
     public static double doubleFromJSONByPath(String jsonString, String jsonPath){
-        Double num = null;
-        try {
-            num = JsonPath.parse(jsonString).read(jsonPath);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return num;
-    }
+        return JsonPath.parse(jsonString).read(jsonPath);
+     }
 
     //Extract List<> from JSON
-    public static List listFromJSONByPath(String jsonString, String jsonPath){
-        List<Object> lObj = null;
-        try {
-            lObj = JsonPath.parse(jsonString).read(jsonPath);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return lObj;
+    public static List listFromJSONByPath(String jsonString, String jsonPath) {
+        return JsonPath.parse(jsonString).read(jsonPath);
     }
 
 }
