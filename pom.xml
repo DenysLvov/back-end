@@ -13,11 +13,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
     <aspectj.version>1.8.10</aspectj.version>
-    <allure-junit4.version>2.6.0</allure-junit4.version>
+    <allure-junit4.version>2.13.1</allure-junit4.version>
   </properties>
 
   <dependencies>

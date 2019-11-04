@@ -13,6 +13,7 @@ public class RestTest{
 
     private static final String URL="https://reqres.in";
 
+
     @Test//GET метод status mode
     public void checkGetResponseStatusCode() throws IOException {
         String endpoint="/api/users";
