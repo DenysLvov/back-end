@@ -2,7 +2,7 @@ package com.brainacad;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import io.qameta.allure.Step;
+
 
 
 import java.util.List;
@@ -23,22 +23,22 @@ public class JsonUtils {
     }
     /*
      * */
-    @Step
+
     //Extract integer from JSON
     public static int intFromJSONByPath(String jsonString, String jsonPath) {
       return JsonPath.parse(jsonString).read(jsonPath);
     }
-    @Step
+
     //Extract String from JSON
     public static String stringFromJSONByPath(String jsonString, String jsonPath) {
        return JsonPath.parse(jsonString).read(jsonPath);
      }
-    @Step
+
     //Extract double from JSON
     public static double doubleFromJSONByPath(String jsonString, String jsonPath){
         return JsonPath.parse(jsonString).read(jsonPath);
      }
-    @Step
+
     //Extract List<> from JSON
     public static List listFromJSONByPath(String jsonString, String jsonPath) {
         return JsonPath.parse(jsonString).read(jsonPath);

@@ -1,6 +1,5 @@
 package com.brainacad;
 
-import io.qameta.allure.Step;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
@@ -13,8 +12,6 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.apache.http.protocol.HTTP.USER_AGENT;
-
 public class HttpClientHelper {
 
     private static Map<String, String> headers = new HashMap<>();
@@ -22,7 +19,7 @@ public class HttpClientHelper {
         headers.put("Content-Type", "application/json");
     }
 
-    @Step
+
     public static HttpResponse get(String endpointUrl, String parameters) throws IOException {
         //Создаём переменую headers типа Map
         Map<String, String> headers = new HashMap<>();
@@ -31,7 +28,6 @@ public class HttpClientHelper {
         return get(endpointUrl, parameters, headers);
     }
 
-    @Step
     //REST GET запрос
     public static HttpResponse get(String endpointUrl, String parameters, Map<String, String> headers) throws IOException {
         //Создаём экземпляр HTTP клиента
@@ -51,7 +47,6 @@ public class HttpClientHelper {
         return response;
     }
 
-    @Step
     public static HttpResponse post(String endpointUrl, String body) throws IOException {
         //Создаём экземпляр HTTP клиента
         HttpClient client = HttpClientBuilder.create().build();
@@ -72,7 +67,7 @@ public class HttpClientHelper {
         //возвращаем response
         return response;
     }
-    @Step
+
     public static String getBodyFromResponse(HttpResponse response) throws IOException {
         //создаём ридер буффера и передаём в него входящий поток респонса
         BufferedReader rd = new BufferedReader(
@@ -87,7 +82,7 @@ public class HttpClientHelper {
         }
         return result.toString();
     }
-    @Step
+
     //PUT method
     public static HttpResponse put(String endpointUrl, String body, Map<String, String> headers) throws IOException {
         //Создаём экземпляр HTTP клиента
@@ -109,7 +104,7 @@ public class HttpClientHelper {
         //возвращаем response
         return response;
     }
-    @Step
+
    public static HttpResponse put(String endpointUrl, String parameters) throws IOException {
         return put(endpointUrl, parameters, headers);
     }
@@ -129,7 +124,7 @@ public class HttpClientHelper {
         //возвращаем response
         return response;
     }
-    @Step
+
     //PATCH method
     public static HttpResponse patch(String endpointUrl, String body, Map<String, String> headers) throws IOException {
         //Создаём экземпляр HTTP клиента
@@ -151,7 +146,7 @@ public class HttpClientHelper {
         //возвращаем response
         return response;
     }
-    @Step
+
     public static HttpResponse patch(String endpointUrl, String parameters) throws IOException {
         return patch(endpointUrl, parameters, headers);
     }

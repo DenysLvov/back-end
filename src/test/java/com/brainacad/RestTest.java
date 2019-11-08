@@ -15,7 +15,7 @@ public class RestTest{
 
 
     @Test//GET метод status mode
-    public void checkGetResponseStatusCode() throws IOException {
+    public void checkGetResponseStatusCode1() throws IOException {
         String endpoint="/api/users";
 
         //Выполняем REST GET запрос с нашими параметрами
@@ -27,6 +27,7 @@ public class RestTest{
         System.out.println("Response Code : " + statusCode);
         Assert.assertEquals("Response status code should be 200", 200, statusCode);
     }
+
 
     @Test//GET метод body
     public void checkGetResponseBodyNotNull() throws IOException {
