@@ -113,8 +113,8 @@ public class RestTest{
         System.out.println(idList.get(0));
         int code = response.getStatusLine().getStatusCode();
             Assert.assertEquals("Status code = 200", 200, code);
-            Assert.assertEquals("First element = 1", 1, idList.get(0));
-            Assert.assertEquals("Second name = 'fuchsia rose'", "fuchsia rose", namesList.get(1));
+            Assert.assertEquals("First element id = 1", 1, idList.get(0));
+                Assert.assertEquals("Second name = 'fuchsia rose'", "fuchsia rose", namesList.get(1));
     }
 
     @Test//GET LIST2
