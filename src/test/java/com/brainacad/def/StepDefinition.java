@@ -6,6 +6,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -20,66 +21,68 @@ public class StepDefinition {
     private int userId;
     private String body;
 
-
+    @Step
     @Given("I have server by url {string}")
     public void iHaveServerByUrl(String url) {
         URL = url;
-     }
+    }
 
+    @Step
     @When("I send GET request on endpoint {string} and parameters {string}")
     public void i_send_GET_request_on_endpoint_and_parameters(String endpoint, String parameters) throws IOException {
-        response = HttpClientHelper.get(URL+endpoint,parameters);
+        response = HttpClientHelper.get(URL + endpoint, parameters);
         body = HttpClientHelper.getBodyFromResponse(response);
     }
 
+    @Step
     @When("I send POST request on endpoint {string} and parameters {string} and {string}")
     public void iSendPOSTRequestOnEndpointAndParametersAnd(String endpoint, String name, String job) throws IOException {
 
-        String requestBody="{\"name\":\"" +name+ "\",\"job\":\""+ job+"\"}";
-        log.info("Request is: "+ requestBody);
-        response = HttpClientHelper.post(URL+endpoint, requestBody );
+        String requestBody = "{\"name\":\"" + name + "\",\"job\":\"" + job + "\"}";
+        log.info("Request is: " + requestBody);
+        response = HttpClientHelper.post(URL + endpoint, requestBody);
         body = HttpClientHelper.getBodyFromResponse(response);
     }
 
+    @Step
     @When("I send PUT request on endpoint {string} and parameters {string} and {string}")
     public void iSendPUTRequestOnEndpointAndParametersAnd(String endpoint, String name, String job) throws IOException {
-        String requestBody="{\"name\":\"" +name+ "\",\"job\":\""+ job+"\"}";
-        log.info("Request is: "+ requestBody);
-        response = HttpClientHelper.put(URL+endpoint, requestBody );
+        String requestBody = "{\"name\":\"" + name + "\",\"job\":\"" + job + "\"}";
+        log.info("Request is: " + requestBody);
+        response = HttpClientHelper.put(URL + endpoint, requestBody);
         body = HttpClientHelper.getBodyFromResponse(response);
 
     }
 
+    @Step
     @Then("I get response status code {int}")
     public void i_get_response_status_code(int responseCode) {
-        Assert.assertEquals("Response code="+responseCode,response.getStatusLine().getStatusCode(), responseCode);
+        Assert.assertEquals("Response code=" + responseCode, response.getStatusLine().getStatusCode(), responseCode);
     }
 
-
+    @Step
     @Then("I got total number of all users {int}")
     public void iGotTotalNumberOfAllUsers(int numUsers) throws IOException {
 
-        int actNumbOgUsers  = JsonUtils.intFromJSONByPath(body, "$.total");
+        int actNumbOgUsers = JsonUtils.intFromJSONByPath(body, "$.total");
         Assert.assertEquals("Total number of users = 12", numUsers, actNumbOgUsers);
     }
 
+    @Step
     @And("I get id of first user = {int}")
     public void iGetIdOfFirstUser(int id) throws IOException {
-        userId  = id;
-        List idList = JsonUtils.listFromJSONByPath (body, "$..id");
+        userId = id;
+        List idList = JsonUtils.listFromJSONByPath(body, "$..id");
         Assert.assertEquals("First element id = 1", id, idList.get(0));
     }
 
+    @Step
     @And("I get name of this user as {string}")
     public void iGetNameOfThisUserAs(String userName) throws IOException {
-        List namesList = JsonUtils.listFromJSONByPath (body, "$..name");
+        List namesList = JsonUtils.listFromJSONByPath(body, "$..name");
         Assert.assertEquals("Second name = 'fuchsia rose'", userName, namesList.get(userId));
     }
 
-    @And("I get {string} name  of user as {string}")
-    public void iGetNameOfUserAs(String isFirstLast, String expName) {
-
-    }
 
     @And("I get updated timestamp not null")
     public void iGetUpdatedTimestampNotNull() {
@@ -88,5 +91,15 @@ public class StepDefinition {
 
     }
 
-
+    @And("I get {string} and {string} of {int} user in list")
+    public void iGetAndOfUserInList(String firstName, String lastName, int num) {
+        List firstNamesList = JsonUtils.listFromJSONByPath(body, "$..first_name");
+        List lastNamesList = JsonUtils.listFromJSONByPath(body, "$..last_name");
+        Assert.assertEquals(firstNamesList.get(num-1),firstName);
+        Assert.assertEquals(lastNamesList.get(num-1),lastName);
+    }
 }
+
+
+
+

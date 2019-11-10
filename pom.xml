@@ -17,16 +17,10 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <aspectj.version>1.8.10</aspectj.version>
     <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
-
-    <allure-junit4.version>2.13.1</allure-junit4.version>
+     <allure-junit4.version>2.13.1</allure-junit4.version>
   </properties>
 
   <dependencies>
-      <dependency>
-        <groupId>org.aspectj</groupId>
-        <artifactId>aspectjweaver</artifactId>
-        <version>1.8.10</version>
-      </dependency>
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-java</artifactId>
@@ -71,6 +65,7 @@
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
     </dependency>
+
   </dependencies>
 
   <build>
@@ -110,6 +105,13 @@
             <testFailureIgnore>false</testFailureIgnore>
             <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
           </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.aspectj</groupId>
+              <artifactId>aspectjweaver</artifactId>
+              <version>1.8.10</version>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>io.qameta.allure</groupId>

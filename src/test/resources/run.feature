@@ -23,6 +23,16 @@ Feature: My feature description
     And I get id of first user = 1
     And I get name of this user as "fuchsia rose"
 
+  Scenario Outline: Verify that GET LIST USERS request returns status code 200
+    Given I have server by url "https://reqres.in"
+    When I send GET request on endpoint "/api/users?" and parameters "page=2"
+    Then I get response status code 200
+    And I get "<firstname>" and "<lastname>" of "<num>" user in list
+    Examples:
+    | num|firstname|lastname|
+    |  1 |Michael |  Lawson |
+    |  2 |Lindsay |  Ferguson |
+
   Scenario: Verify that CREATE with POST an user
     Given I have server by url "https://reqres.in"
     When I send POST request on endpoint "/api/users" and parameters "testername" and "manualQA"
