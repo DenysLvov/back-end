@@ -14,7 +14,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
         typeRegistry.defineParameterType(new ParameterType<>(
                 "digits",    //name of our parameter
-                "\\d*",     //regular expression to receive only digits
+                "\\d*\"",     //regular expression to receive only digits
                 Integer.class,     //type to wich we need convert
                 (String s) -> Integer.parseInt(s)));
 

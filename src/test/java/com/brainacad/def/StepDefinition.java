@@ -91,12 +91,8 @@ public class StepDefinition {
 
     }
 
-    @And("I get {string} and {string} of {int} user in list")
-    public void iGetAndOfUserInList(String firstName, String lastName, int num) {
-        List firstNamesList = JsonUtils.listFromJSONByPath(body, "$..first_name");
-        List lastNamesList = JsonUtils.listFromJSONByPath(body, "$..last_name");
-        Assert.assertEquals(firstNamesList.get(num-1),firstName);
-        Assert.assertEquals(lastNamesList.get(num-1),lastName);
+    @And("I get {string} and {string} of {digits} user in list")
+    public void iGetAndOfUserInList(String arg0, String arg1, String arg2) {
     }
 }
 
