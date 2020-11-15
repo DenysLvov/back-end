@@ -2,15 +2,14 @@ package com.brainacad.def;
 
 import com.brainacad.HttpClientHelper;
 import com.brainacad.JsonUtils;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -91,9 +90,6 @@ public class StepDefinition {
 
     }
 
-    @And("I get {string} and {string} of {digits} user in list")
-    public void iGetAndOfUserInList(String arg0, String arg1, String arg2) {
-    }
 }
 
 

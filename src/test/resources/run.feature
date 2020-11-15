@@ -27,7 +27,7 @@ Feature: My feature description
     Given I have server by url "https://reqres.in"
     When I send GET request on endpoint "/api/users?" and parameters "page=2"
     Then I get response status code 200
-    And I get "<firstname>" and "<lastname>" of "<num>" user in list
+    #And I get "<firstname>" and "<lastname>" of "<num>" user in list
 
     Examples:
     | num|firstname|lastname|

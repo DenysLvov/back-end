@@ -1,15 +1,16 @@
 package com.brainacad;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = {"io.qameta.allure.cucumber3jvm.AllureCucumber3Jvm", "pretty",
+        //"io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm",
+        plugin = {"pretty",
                 "json:target/cucumber-report/report.json"},
-        features = "src/test/resources",
-        glue = "src.test.java.com.brainacad.def"
+        glue = "com.brainacad.def",
+        features = "src/test/resources"
         //tags = "@myTag"
 )
 

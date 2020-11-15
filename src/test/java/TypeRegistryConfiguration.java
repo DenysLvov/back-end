@@ -1,5 +1,5 @@
-import cucumber.api.TypeRegistry;
-import cucumber.api.TypeRegistryConfigurer;
+import io.cucumber.core.api.TypeRegistry;
+import io.cucumber.core.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterType;
 
 import java.util.Locale;
