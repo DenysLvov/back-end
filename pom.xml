@@ -96,9 +96,12 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-          <!-- ================ Allure section =============== -->
+          <version>2.22.2</version>
           <configuration>
+            <!-- Parallelisation-->
+            <parallel>methods</parallel>
+            <threadCount>2</threadCount>
+            <!-- ================ Allure section =============== -->
             <systemProperties>
               <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
               <!--property>
